@@ -2,13 +2,54 @@
 <html>
 
   <head>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        /* 设置字体 */
+        background-color: #f4f4f4;
+        /* 设置背景颜色 */
+        display: flex;
+        justify-content: center;
+        /* 水平居中 */
+        align-items: center;
+        /* 垂直居中 */
+        height: 100vh;
+        /* 使页面内容占满整个视口高度 */
+        margin: 0;
+        /* 移除默认的外边距 */
+      }
+
+      p {
+        font-size: 18px;
+        /* 设置字体大小 */
+        color: #333;
+        /* 设置字体颜色 */
+      }
+    </style>
     <script>
-      const API_ENDPOINT = 'https://318klpa86722.vicp.fun';
-      const response = await fetch(`${API_ENDPOINT}/api/wx`, {
-        method: 'get'
-      }).then(res => res.json());
-      window.location.href = response.url;
+      document.addEventListener('DOMContentLoaded', async () => {
+        const API_ENDPOINT = 'https://318klpa86722.vicp.fun';
+        try {
+          const response = await fetch(`${API_ENDPOINT}/api/wx`, {
+            method: 'get'
+          });
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const data = await response.json(); // 假设API返回JSON数据
+          console.log(data);
+          // 根据API返回的数据设置新的URL
+          if (data.url) {
+            window.location.href = data.url;
+          } else {
+            console.error('No URL found in the response data.');
+          }
+        } catch (error) {
+          console.error('There was a problem with the fetch operation:', error);
+        }
+      });
     </script>
+
   </head>
 
   <body>
